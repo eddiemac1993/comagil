@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 class="mb-4">Dashboard</h1>
+
+<div class="row">
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <div class="card-header bg-primary text-white">
+                <h5 class="card-title mb-0"><i class="fas fa-box mr-2"></i>Recent Products</h5>
+            </div>
+            <ul class="list-group list-group-flush">
+                {% for product in products %}
+                <li class="list-group-item">
+                    <a href="{% url 'product_detail' product.id %}">{{ product.name }}</a>
+                    <span class="float-right badge badge-primary">{{ product.quantity }}</span>
+                </li>
+                {% empty %}
+                <li class="list-group-item">No recent products</li>
+                {% endfor %}
+            </ul>
+            <div class="card-footer">
+                <a href="{% url 'product_list' %}" class="btn btn-outline-primary btn-sm">View all products</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <div class="card-header bg-success text-white">
+                <h5 class="card-title mb-0"><i class="fas fa-shopping-cart mr-2"></i>Recent Orders</h5>
+            </div>
+            <ul class="list-group list-group-flush">
+                {% for order in orders %}
+                <li class="list-group-item">
+                    <a href="{% url 'order_detail' order.id %}">Order {{ order.id }}</a>
+                    <span class="float-right">{{ order.order_date|date:"M d, Y" }}</span>
+                </li>
+                {% empty %}
+                <li class="list-group-item">No recent orders</li>
+                {% endfor %}
+            </ul>
+            <div class="card-footer">
+                <a href="{% url 'order_list' %}" class="btn btn-outline-success btn-sm">View all orders</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <div class="card-header bg-warning text-dark">
+                <h5 class="card-title mb-0"><i class="fas fa-money-bill-wave mr-2"></i>Recent Expenses</h5>
+            </div>
+            <ul class="list-group list-group-flush">
+                {% for expense in expenses %}
+                <li class="list-group-item">
+                    {{ expense.description }}
+                    <span class="float-right">{{ expense.amount }} {{ currency }}</span>
+                </li>
+                {% empty %}
+                <li class="list-group-item">No recent expenses</li>
+                {% endfor %}
+            </ul>
+            <div class="card-footer">
+                <a href="{% url 'expense_list' %}" class="btn btn-outline-warning btn-sm">View all expenses</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header bg-info text-white">
+                <h5 class="card-title mb-0"><i class="fas fa-warehouse mr-2"></i>Stock Management</h5>
+            </div>
+            <div class="card-body">
+                <p class="card-text">Manage your inventory and track stock levels.</p>
+                <a href="{% url 'stock_list' %}" class="btn btn-outline-info">View stock entries</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header bg-secondary text-white">
+                <h5 class="card-title mb-0"><i class="fas fa-file-invoice-dollar mr-2"></i>Invoices</h5>
+            </div>
+            <div class="card-body">
+                <p class="card-text">Generate and manage invoices for your orders.</p>
+                <a href="{% url 'invoice_list' %}" class="btn btn-outline-secondary">View invoices</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

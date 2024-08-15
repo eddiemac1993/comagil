@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 class="mb-4">Expenses</h1>
+<a href="{% url 'expense_create' %}" class="btn btn-primary mb-3"><i class="fas fa-plus"></i> Add Expense</a>
+<div class="card">
+    <table class="responsive-table">
+        <thead>
+            <tr>
+                <th>Description</th>
+                <th>Amount</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for expense in expenses %}
+            <tr>
+                <td data-label="Description">{{ expense.description }}</td>
+                <td data-label="Amount">${{ expense.amount }}</td>
+                <td data-label="Date">{{ expense.date }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="3">No expenses found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

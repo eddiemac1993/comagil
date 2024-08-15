@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 class="mb-4">Invoices</h1>
+<a href="{% url 'invoice_create' %}" class="btn btn-primary mb-3"><i class="fas fa-plus"></i> Create Invoice</a>
+<div class="card">
+    <table class="responsive-table">
+        <thead>
+            <tr>
+                <th>Invoice Number</th>
+                <th>Order</th>
+                <th>Created Date</th>
+                <th>Due Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for invoice in invoices %}
+            <tr>
+                <td data-label="Invoice Number">{{ invoice.invoice_number }}</td>
+                <td data-label="Order">Order #{{ invoice.order.id }}</td>
+                <td data-label="Created Date">{{ invoice.created_date }}</td>
+                <td data-label="Due Date">{{ invoice.due_date }}</td>
+                <td data-label="Actions">
+                    <a href="{% url 'invoice_detail' invoice.pk %}" class="btn btn-info btn-sm"><i class="fas fa-eye"></i> View</a>
+                    <a href="{% url 'invoice_pdf' invoice.pk %}" class="btn btn-secondary btn-sm"><i class="fas fa-file-pdf"></i> PDF</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">No invoices found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

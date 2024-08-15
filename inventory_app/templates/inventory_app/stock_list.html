@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 class="mb-4">Stock Entries</h1>
+<a href="{% url 'stock_entry_create' %}" class="btn btn-primary mb-3"><i class="fas fa-plus"></i> Add Stock Entry</a>
+<div class="card">
+    <table class="responsive-table">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Quantity Change</th>
+                <th>Date</th>
+                <th>Notes</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entry in stock_entries %}
+            <tr>
+                <td data-label="Product">{{ entry.product.name }}</td>
+                <td data-label="Quantity Change">{{ entry.quantity_change }}</td>
+                <td data-label="Date">{{ entry.date }}</td>
+                <td data-label="Notes">{{ entry.notes|default:"-" }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4">No stock entries found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

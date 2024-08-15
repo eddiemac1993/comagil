@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Invoice #{{ invoice.invoice_number }}</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #ddd; padding: 8px; }
+        th { background-color: #f2f2f2; }
+    </style>
+</head>
+<body>
+    <h1>Invoice #{{ invoice.invoice_number }}</h1>
+    <p><strong>Order Date:</strong> {{ invoice.order.order_date }}</p>
+    <p><strong>Due Date:</strong> {{ invoice.due_date }}</p>
+    <p><strong>Customer:</strong> {{ invoice.order.customer.username }}</p>
+    
+    <h2>Order Items</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in invoice.order.orderitem_set.all %}
+            <tr>
+                <td>{{ item.product.name }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ currency }}{{ item.price }}</td>
+                <td>{{ currency }}{{ item.quantity|multiply:item.price }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    <h3>Total Amount: {{ currency }}{{ invoice.order.total_amount }}</h3>
+</body>
+</html>
